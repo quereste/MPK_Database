@@ -1,5 +1,6 @@
 IF OBJECT_ID('Departments', 'U') IS NOT NULL DROP TABLE Departments
 IF OBJECT_ID('Buildings', 'U') IS NOT NULL DROP TABLE Buildings
+IF OBJECT_ID('DepartmentBuildings', 'U') IS NOT NULL DROP TABLE Buildings
 IF OBJECT_ID('Employees', 'U') IS NOT NULL DROP TABLE Employees
 IF OBJECT_ID('SalaryHistory', 'U') IS NOT NULL DROP TABLE SalaryHistory
 IF OBJECT_ID('EmployeeHolidays', 'U') IS NOT NULL DROP TABLE EmployeeHolidays
@@ -24,6 +25,18 @@ CREATE TABLE Buildings (
 
 	FOREIGN KEY (DepartmentID) REFERENCES Departments (DepartmentID)
 )
+
+CREATE TABLE DepartementBuildings (
+	DepartmentID INT,
+	BuildingID INT,
+
+	PRIMARY KEY (DepartmentID, BuildingID),
+	FOREIGN KEY (DepartmentID) REFERENCES Departments (DepartmentID),
+	FOREIGN KEY (BuildingID) REFERENCES Buildings (BuildingID)
+	ON UPDATE CASCADE
+	ON DELETE CASCADE
+)
+
 
 
 CREATE TABLE Employees (
@@ -76,7 +89,7 @@ CREATE TABLE EmpolyeeFamilyMembers (
 	Relationship VARCHAR(30) NOT NULL,
 
 	PRIMARY KEY (EmployeeID, MemberID),
-	FOREIGN KEY (EmployeeID) REFERENCES Employees (EmployeeID) --on update
+	FOREIGN KEY (EmployeeID) REFERENCES Employees (EmployeeID)
 	ON DELETE CASCADE
 	ON UPDATE CASCADE
 )
@@ -89,8 +102,6 @@ CREATE TABLE BusDrivers (
 	MedicalExpiryDate DATE NOT NULL,
 
 	FOREIGN KEY (EmployeeID, DepartmentID) REFERENCES Employees (EmployeeID, DepartmentID)
-	ON DELETE CASCADE
-	ON UPDATE CASCADE
 )
 
 CREATE TABLE TramDrivers (
@@ -101,29 +112,23 @@ CREATE TABLE TramDrivers (
 	MedicalExpiryDate DATE NOT NULL,
 	
 	FOREIGN KEY (EmployeeID, DepartmentID) REFERENCES Employees (EmployeeID, DepartmentID)
-	ON DELETE CASCADE
-	ON UPDATE CASCADE
 )
 
 CREATE TABLE ServiceTechnicians (
 	EmployeeID INT PRIMARY KEY,
 	DepartmentID AS 3 PERSISTED,
 	BusPermission BIT NOT NULL,
-	TramPermission BIT NOT NULL
+	TramPermission BIT NOT NULL,
 
 	FOREIGN KEY (EmployeeID, DepartmentID) REFERENCES Employees (EmployeeID, DepartmentID)
-	ON DELETE CASCADE
-	ON UPDATE CASCADE
 )
 
 CREATE TABLE TicketInspectors (
 	EmployeeID INT PRIMARY KEY,
 	DepartmentID AS 3 PERSISTED,
-	LicenceID CHAR(10) NOT NULL
+	LicenceID CHAR(10) NOT NULL,
 
 	FOREIGN KEY (EmployeeID, DepartmentID) REFERENCES Employees (EmployeeID, DepartmentID)
-	ON DELETE CASCADE
-	ON UPDATE CASCADE
 )
 
 CREATE TABLE OfficeWorkers (
@@ -133,25 +138,23 @@ CREATE TABLE OfficeWorkers (
 
 	FOREIGN KEY (BuildingID) REFERENCES Buildings(BuildingID),
 	FOREIGN KEY (EmployeeID, DepartmentID) REFERENCES Employees (EmployeeID, DepartmentID)
-	ON DELETE CASCADE
-	ON UPDATE CASCADE
 )
 
 
 ALTER TABLE Employees
-ADD CONSTRAINT is_phone_valid CHECK(ISNUMERIC(PhoneNumer) = 1 AND LEN(PhoneNumber) = 9)
+ADD CONSTRAINT is_phone_valid CHECK(ISNUMERIC(PhoneNumber) = 1 AND LEN(PhoneNumber) = 9)
 
 ALTER TABLE Employees
 ADD CONSTRAINT is_employee_pesel_valid CHECK(ISNUMERIC(PESEL) = 1 AND LEN(PESEL) = 11)
 
-ALTER TABLE EmployeeHolidays 
+ALTER TABLE EmpolyeeHolidays 
 ADD CONSTRAINT are_holiday_dates_valid CHECK(DateTo >= DateFrom)
 
 ALTER TABLE SalaryHistory
 ADD CONSTRAINT are_salary_dates_valid CHECK(DateTo >= DateFrom)
 
 ALTER TABLE BusDrivers
-ADD CONSTRAINT is_driver_licence_valid CHECK(LEN(BusDriverLicence) = 13)
+ADD CONSTRAINT is_driver_licence_valid CHECK(LEN(DriverLicenceID) = 13)
 
 ALTER TABLE TramDrivers
 ADD CONSTRAINT is_tram_licence_valid CHECK(LEN(LicenceID) = 10)
