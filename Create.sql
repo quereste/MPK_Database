@@ -277,7 +277,7 @@ ADD CONSTRAINT is_phone_valid CHECK(ISNUMERIC(PhoneNumber) = 1 AND LEN(PhoneNumb
 ALTER TABLE Employees
 ADD CONSTRAINT is_employee_pesel_valid CHECK(ISNUMERIC(PESEL) = 1 AND LEN(PESEL) = 11)
 
-ALTER TABLE EmpolyeeHolidays 
+ALTER TABLE EmployeeHolidays 
 ADD CONSTRAINT are_holiday_dates_valid CHECK(DateTo >= DateFrom)
 
 ALTER TABLE SalaryHistory
