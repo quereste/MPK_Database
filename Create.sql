@@ -37,7 +37,7 @@ CREATE TABLE Buildings (
 	FOREIGN KEY (DepartmentID) REFERENCES Departments (DepartmentID)
 )
 
-CREATE TABLE DepartementBuildings (
+CREATE TABLE DepartmentBuildings (
 	DepartmentID INT,
 	BuildingID INT,
 
