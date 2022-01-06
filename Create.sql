@@ -1,6 +1,6 @@
 IF OBJECT_ID('Departments', 'U') IS NOT NULL DROP TABLE Departments
 IF OBJECT_ID('Buildings', 'U') IS NOT NULL DROP TABLE Buildings
-IF OBJECT_ID('DepartmentBuildings', 'U') IS NOT NULL DROP TABLE Buildings
+IF OBJECT_ID('DepartmentBuildings', 'U') IS NOT NULL DROP TABLE DepartmentBuildings
 IF OBJECT_ID('Employees', 'U') IS NOT NULL DROP TABLE Employees
 IF OBJECT_ID('SalaryHistory', 'U') IS NOT NULL DROP TABLE SalaryHistory
 IF OBJECT_ID('EmployeeHolidays', 'U') IS NOT NULL DROP TABLE EmployeeHolidays
