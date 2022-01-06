@@ -79,7 +79,7 @@ CREATE TABLE SalaryHistory (
 	ON UPDATE CASCADE
 )
 
-CREATE TABLE EmpolyeeHolidays (
+CREATE TABLE EmployeeHolidays (
 	EmployeeID INT,
 	DateFrom DATE,
 	DateTo DATE NOT NULL,
@@ -90,7 +90,7 @@ CREATE TABLE EmpolyeeHolidays (
 	ON UPDATE CASCADE
 )
 
-CREATE TABLE EmpolyeeFamilyMembers (
+CREATE TABLE EmployeeFamilyMembers (
 	EmployeeID INT,
 	MemberID INT,
 	FirstName VARCHAR(50) NOT NULL,
