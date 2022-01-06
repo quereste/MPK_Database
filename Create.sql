@@ -1,27 +1,26 @@
-IF OBJECT_ID('Departments', 'U') IS NOT NULL DROP TABLE Departments
-IF OBJECT_ID('Buildings', 'U') IS NOT NULL DROP TABLE Buildings
-IF OBJECT_ID('DepartmentBuildings', 'U') IS NOT NULL DROP TABLE DepartmentBuildings
-IF OBJECT_ID('Employees', 'U') IS NOT NULL DROP TABLE Employees
-IF OBJECT_ID('SalaryHistory', 'U') IS NOT NULL DROP TABLE SalaryHistory
-IF OBJECT_ID('EmployeeHolidays', 'U') IS NOT NULL DROP TABLE EmployeeHolidays
+IF OBJECT_ID('SalaryHistory', 'U') IS NOT NULL DROP TABLE SalaryHistory;
+IF OBJECT_ID('EmployeeHolidays', 'U') IS NOT NULL DROP TABLE EmployeeHolidays;
 IF OBJECT_ID('EmployeeFamilyMembers', 'U') IS NOT NULL DROP TABLE EmployeeFamilyMembers
 IF OBJECT_ID('BusDrivers', 'U') IS NOT NULL DROP TABLE BusDrivers
 IF OBJECT_ID('TramDrivers', 'U') IS NOT NULL DROP TABLE TramDrivers
 IF OBJECT_ID('ServiceTechnicians', 'U') IS NOT NULL DROP TABLE ServiceTechnicians
 IF OBJECT_ID('TicketInspectors', 'U') IS NOT NULL DROP TABLE TicketInspectors
 IF OBJECT_ID('OfficeWorkers', 'U') IS NOT NULL DROP TABLE OfficeWorkers
+IF OBJECT_ID('Employees', 'U') IS NOT NULL DROP TABLE Employees
+IF OBJECT_ID('DepartmentBuildings', 'U') IS NOT NULL DROP TABLE DepartmentBuildings
+IF OBJECT_ID('Depots', 'U') IS NOT NULL DROP TABLE Depots
+IF OBJECT_ID('Buildings', 'U') IS NOT NULL DROP TABLE Buildings
+IF OBJECT_ID('Departments', 'U') IS NOT NULL DROP TABLE Departments
 IF OBJECT_ID('TramModels', 'U') IS NOT NULL DROP TABLE TramModels
 IF OBJECT_ID('BusModels', 'U') IS NOT NULL DROP TABLE BusModels
 IF OBJECT_ID('SpecialVehicleModels', 'U') IS NOT NULL DROP TABLE SpecialVehicleModels
 IF OBJECT_ID('VehicleModels', 'U') IS NOT NULL DROP TABLE VehicleModels
-IF OBJECT_ID('Depots', 'U') IS NOT NULL DROP TABLE Depots
 IF OBJECT_ID('PeriodicTickets', 'U') IS NOT NULL DROP TABLE PeriodicTickets
 IF OBJECT_ID('Passengers', 'U') IS NOT NULL DROP TABLE Passengers
 IF OBJECT_ID('Discounts', 'U') IS NOT NULL DROP TABLE Discounts
 IF OBJECT_ID('AirReadings', 'U') IS NOT NULL DROP TABLE AirReadings
 IF OBJECT_ID('SoldSingleTickets ', 'U') IS NOT NULL DROP TABLE SoldSingleTickets
 IF OBJECT_ID('TypesOfTickets', 'U') IS NOT NULL DROP TABLE TypesOfTickets
-
 
 CREATE TABLE Departments (
 	DepartmentID INT PRIMARY KEY,
