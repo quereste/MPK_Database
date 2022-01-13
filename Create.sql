@@ -102,21 +102,6 @@ CREATE TABLE EmployeeHolidays (
 	ON UPDATE CASCADE
 )
 
-CREATE TABLE EmployeeFamilyMembers (
-	EmployeeID INT,
-	MemberID INT,
-	FirstName VARCHAR(50) NOT NULL,
-	LastName VARCHAR(50) NOT NULL,
-	Gender NVARCHAR (1) NOT NULL,
-	BirthDate DATE,
-	Relationship VARCHAR(30) NOT NULL,
-
-	PRIMARY KEY (EmployeeID, MemberID),
-	FOREIGN KEY (EmployeeID) REFERENCES Employees (EmployeeID)
-	ON DELETE CASCADE
-	ON UPDATE CASCADE
-)
-
 CREATE TABLE BusDrivers (
 	EmployeeID INT PRIMARY KEY,
 	DepartmentID AS 1 PERSISTED,
@@ -151,7 +136,7 @@ CREATE TABLE TicketInspectors (
 	DepartmentID AS 5 PERSISTED,
 	LicenceID CHAR(10) NOT NULL,
 
-	CONSTRAINt dUPA FOREIGN KEY (EmployeeID, DepartmentID) REFERENCES Employees (EmployeeID, DepartmentID)
+	FOREIGN KEY (EmployeeID, DepartmentID) REFERENCES Employees (EmployeeID, DepartmentID)
 )
 
 CREATE TABLE OfficeWorkers (
