@@ -50,8 +50,8 @@ CREATE TABLE Buildings (
 )
 
 CREATE TABLE DepartmentBuildings (
-	DepartmentID INT,
 	BuildingID INT,
+	DepartmentID INT,
 
 	PRIMARY KEY (DepartmentID, BuildingID),
 	FOREIGN KEY (DepartmentID) REFERENCES Departments (DepartmentID),
@@ -148,10 +148,10 @@ CREATE TABLE ServiceTechnicians (
 
 CREATE TABLE TicketInspectors (
 	EmployeeID INT PRIMARY KEY,
-	DepartmentID AS 3 PERSISTED,
+	DepartmentID AS 5 PERSISTED,
 	LicenceID CHAR(10) NOT NULL,
 
-	FOREIGN KEY (EmployeeID, DepartmentID) REFERENCES Employees (EmployeeID, DepartmentID)
+	CONSTRAINt dUPA FOREIGN KEY (EmployeeID, DepartmentID) REFERENCES Employees (EmployeeID, DepartmentID)
 )
 
 CREATE TABLE OfficeWorkers (
@@ -425,7 +425,7 @@ CREATE TABLE DetailedTramCourses (
 	ON DELETE CASCADE,
 	FOREIGN KEY (VehicleID) REFERENCES Vehicles(VehicleID)
 	ON UPDATE CASCADE
-	ON DELETE CASCADE,
+	ON DELETE CASCADE
 )
 
 ALTER TABLE Employees
@@ -437,8 +437,8 @@ ADD CONSTRAINT is_employee_pesel_valid CHECK(ISNUMERIC(PESEL) = 1 AND LEN(PESEL)
 ALTER TABLE EmployeeHolidays 
 ADD CONSTRAINT are_holiday_dates_valid CHECK(DateTo >= DateFrom)
 
-ALTER TABLE SalaryHistory
-ADD CONSTRAINT are_salary_dates_valid CHECK(DateTo >= DateFrom)
+--ALTER TABLE SalaryHistory
+--ADD CONSTRAINT are_salary_dates_valid CHECK(DateTo >= DateFrom)
 
 ALTER TABLE BusDrivers
 ADD CONSTRAINT is_driver_licence_valid CHECK(LEN(DriverLicenceID) = 13)
@@ -457,3 +457,4 @@ ADD CONSTRAINT is_passenger_pesel_valid CHECK(ISNUMERIC(PESEL) = 1 AND LEN(PESEL
 
 ALTER TABLE Discounts
 ADD CONSTRAINT is_discount_date_valid CHECK(DateFrom >= DateTo)
+
