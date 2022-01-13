@@ -13,7 +13,6 @@ IF OBJECT_ID('Streets', 'U') IS NOT NULL DROP TABLE Streets
 IF OBJECT_ID('Vehicles', 'U') IS NOT NULL DROP TABLE Vehicles
 IF OBJECT_ID('SalaryHistory', 'U') IS NOT NULL DROP TABLE SalaryHistory;
 IF OBJECT_ID('EmployeeHolidays', 'U') IS NOT NULL DROP TABLE EmployeeHolidays;
-IF OBJECT_ID('EmployeeFamilyMembers', 'U') IS NOT NULL DROP TABLE EmployeeFamilyMembers
 IF OBJECT_ID('BusDrivers', 'U') IS NOT NULL DROP TABLE BusDrivers
 IF OBJECT_ID('TramDrivers', 'U') IS NOT NULL DROP TABLE TramDrivers
 IF OBJECT_ID('ServiceTechnicians', 'U') IS NOT NULL DROP TABLE ServiceTechnicians
