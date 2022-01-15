@@ -149,6 +149,7 @@ CREATE TABLE OfficeWorkers (
 
 CREATE TABLE VehicleModels (
 ModelID INT PRIMARY KEY,
+ModelName NVARCHAR(50),
 ProductionStartDate DATE,
 ProductionEndDate DATE,
 Seats INT NOT NULL,
