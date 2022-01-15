@@ -154,10 +154,11 @@ ProductionStartDate DATE,
 ProductionEndDate DATE,
 Seats INT NOT NULL,
 StandingPlaces INT NOT NULL,
-ModelLength INT NOT NULL --, 
---FOREIGN KEY (ModelID) REFERENCES Vehicles(ModelID)
---ON DELETE CASCADE
---ON UPDATE CASCADE
+ModelLength INT NOT NULL, 
+FOREIGN KEY (ModelID) REFERENCES Vehicles(ModelID)
+ON DELETE CASCADE
+ON UPDATE CASCADE
+-- długość w milimetrach
 )
 
 CREATE TABLE TramModels (
@@ -204,13 +205,13 @@ ON UPDATE CASCADE
 
 CREATE TABLE TypesOfTickets (
 TicketID INT PRIMARY KEY,
-Name VARCHAR(50) NOT NULL,
+Name VARCHAR(75) NOT NULL,
 Price MONEY NOT NULL,
 Periodic BIT NOT NULL
 )
 
 CREATE TABLE Passengers (
-PassengerID INT PRIMARY KEY,
+PassengerID INT PRIMARY KEY IDENTITY(1, 1),
 PESEL CHAR(11) UNIQUE NOT NULL,
 FirstName VARCHAR(50) NOT NULL,
 LastName VARCHAR(50) NOT NULL,
@@ -223,7 +224,7 @@ Pensioner BIT NOT NULL
 )
 
 CREATE TABLE PeriodicTickets (
-TicketID INT PRIMARY KEY,
+TicketNumber CHAR(15) PRIMARY KEY,
 TicketNumber INT NOT NULL,
 OwnerID INT NOT NULL,
 DateFrom DATE NOT NULL,
@@ -241,7 +242,8 @@ CREATE TABLE Discounts (
 DiscountID INT PRIMARY KEY,
 TicketID INT NOT NULL,
 DateFrom DATE,
-DateTo DATE
+DateTo DATE,
+Percentage INT
 
 FOREIGN KEY (TicketID) REFERENCES TypesOfTickets(TicketID)
 ON DELETE CASCADE
@@ -258,7 +260,7 @@ O3 FLOAT NOT NULL
 )
 
 CREATE TABLE SoldSingleTickets (
-TicketID INT PRIMARY KEY,
+TicketNumber CHAR(15) PRIMARY KEY,
 TicketNumber INT NOT NULL,
 DateOfPurchase Date NOT NULL
 
