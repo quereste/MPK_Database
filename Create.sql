@@ -225,7 +225,7 @@ Pensioner BIT NOT NULL
 
 CREATE TABLE PeriodicTickets (
 TicketNumber CHAR(15) PRIMARY KEY,
-TicketNumber INT NOT NULL,
+TicketID INT NOT NULL,
 OwnerID INT NOT NULL,
 DateFrom DATE NOT NULL,
 
@@ -261,7 +261,7 @@ O3 FLOAT NOT NULL
 
 CREATE TABLE SoldSingleTickets (
 TicketNumber CHAR(15) PRIMARY KEY,
-TicketNumber INT NOT NULL,
+TicketID INT NOT NULL,
 DateOfPurchase Date NOT NULL
 
 FOREIGN KEY (TicketID) REFERENCES TypesOfTickets(TicketID)
