@@ -412,6 +412,21 @@ CREATE TABLE DetailedTramCourses (
 	ON DELETE CASCADE
 )
 
+CREATE TABLE Repairs (
+	RepairID INT PRIMARY KEY,
+	VehicleID INT,
+	TechnicianID INT,
+	DateFrom DATE,
+	DateTo DATE,
+	Notes NVARCHAR(200)
+	FOREIGN KEY (VehicleID) REFERENCES Vehicles(VehicleID)
+	ON UPDATE CASCADE
+	ON DELETE CASCADE,
+	FOREIGN KEY (TechnicianID) REFERENCES ServiceTechnicians(EmployeeID)
+	ON UPDATE CASCADE
+	ON DELETE CASCADE
+)
+
 ALTER TABLE Employees
 ADD CONSTRAINT is_phone_valid CHECK(ISNUMERIC(PhoneNumber) = 1 AND LEN(PhoneNumber) = 9)
 
