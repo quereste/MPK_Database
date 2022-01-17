@@ -155,9 +155,6 @@ ProductionEndDate DATE,
 Seats INT NOT NULL,
 StandingPlaces INT NOT NULL,
 ModelLength INT NOT NULL, 
-FOREIGN KEY (ModelID) REFERENCES Vehicles(ModelID)
-ON DELETE CASCADE
-ON UPDATE CASCADE
 -- długość w milimetrach
 )
 
