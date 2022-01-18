@@ -150,7 +150,7 @@ CREATE TABLE OfficeWorkers (
 CREATE TABLE VehicleModels (
 ModelID INT PRIMARY KEY,
 ModelName NVARCHAR(50),
-ProductionStarYear INT,
+ProductionStartYear INT,
 ProductionEndYear INT,
 Seats INT NOT NULL,
 StandingPlaces INT NOT NULL,
