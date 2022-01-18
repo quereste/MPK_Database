@@ -450,7 +450,7 @@ ALTER TABLE TicketInspectors
 ADD CONSTRAINT is_ispector_licence_valid CHECK(LEN(LicenceID) = 10)
 
 ALTER TABLE VehicleModels
-ADD CONSTRAINT is_production_date_valid CHECK(ProductionStartDate >= ProductionEndDate)
+ADD CONSTRAINT is_production_date_valid CHECK(ProductionStartYear <= ProductionEndYear)
 
 ALTER TABLE Passengers
 ADD CONSTRAINT is_passenger_pesel_valid CHECK(ISNUMERIC(PESEL) = 1 AND LEN(PESEL) = 11)
