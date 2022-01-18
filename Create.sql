@@ -294,10 +294,10 @@ CREATE TABLE Stops (
 	StopID INT PRIMARY KEY,
 	StreetID INT NOT NULL,
 	StopName NVARCHAR(60) NOT NULL,
-	IsBusStop CHAR(1) NOT NULL,
-	IsFinalBusStop CHAR(1) NOT NULL,
-	IsTramStop CHAR(1) NOT NULL,
-	IsFinalTramStop CHAR(1) NOT NULL
+	IsBusStop BIT NOT NULL,
+	IsFinalBusStop BIT NOT NULL,
+	IsTramStop BIT NOT NULL,
+	IsFinalTramStop BIT NOT NULL
 
 	FOREIGN KEY (StreetID) REFERENCES Streets(StreetID)
 	ON UPDATE CASCADE
@@ -361,8 +361,8 @@ CREATE TABLE TramLines (
 CREATE TABLE Courses (
 	CourseID INT PRIMARY KEY,
 	LineID INT,
-	RegularSaturdayHoliday CHAR(1) NOT NULL,
-	Direction CHAR(1) NOT NULL,
+	RegularSaturdayHoliday BIT NOT NULL,
+	Direction BIT NOT NULL,
 	Departure TIME NOT NULL,
 
 	FOREIGN KEY (LineID) REFERENCES Lines(LineID)
@@ -373,7 +373,7 @@ CREATE TABLE Courses (
 CREATE TABLE DetailedCourses (
 	DetailedCourseID INT PRIMARY KEY,
 	CourseID INT,
-	CourseDay CHAR(1) NOT NULL,
+	CourseDay BIT NOT NULL,
 	CourseDate DATE NOT NULL,
 
 	FOREIGN KEY (CourseID) REFERENCES Courses(CourseID)
