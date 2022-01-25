@@ -22,3 +22,18 @@ GO
 CREATE VIEW Ticket_Types
 AS
 	SELECT Name AS [Ticket Name], Price FROM TypesOfTickets
+
+GO 
+CREATE VIEW Vehicle_Models
+AS 
+	SELECT M.ModelName, COUNT(*) AS Quantity, 
+	CASE 
+		WHEN M.ModelID IN (SELECT ModelID FROM TramModels) THEN 'Tram'
+		WHEN M.ModelID IN (SELECT ModelID FROM BusModels) THEN 'Bus'
+		ELSE 'Other'
+	END AS Vechicle_Type
+	FROM Vehicles AS V JOIN VehicleModels AS M
+	ON V.ModelID = M.ModelID
+	GROUP BY M.ModelName, M.ModelID
+	ORDER BY M.ModelID
+	OFFSET 0 ROWS
