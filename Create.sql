@@ -341,7 +341,7 @@ CREATE TABLE Lines (
 )
 
 CREATE TABLE BusLines (
-	LineID INT PRIMARY KEY,
+	LineID INT,
 	StopNumber INT NOT NULL,
 	StopID INT
 	PRIMARY KEY (LineID, StopNumber),
