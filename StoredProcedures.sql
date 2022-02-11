@@ -1,6 +1,9 @@
 IF OBJECT_ID('Passenger_Ticket_Info', 'P') IS NOT NULL
 DROP PROCEDURE Passenger_Ticket_Info
 
+IF OBJECT_ID('Passengers_With_Valid_Periodic_Tickets', 'P') IS NOT NULL
+DROP PROCEDURE Passengers_With_Valid_Periodic_Tickets
+
 GO
 
 CREATE PROCEDURE Passenger_Ticket_Info (@id INT) AS
@@ -38,3 +41,42 @@ BEGIN
 END
 
 GO
+
+GO
+CREATE PROCEDURE Passengers_With_Valid_Periodic_Tickets (@currentDay DATE) AS
+BEGIN
+	DECLARE cur CURSOR FOR SELECT PT.TicketID, OwnerID, DateFrom, PassengerID, FirstName, LastName FROM PeriodicTickets PT JOIN TypesOfTickets T ON PT.TicketID = T.TicketID
+	JOIN Passengers P ON PT.OwnerID = P.PassengerID
+
+	DECLARE @result Table(ID INT, FirstName VARCHAR(50), LastName VARCHAR(50), DateOfPurchase DATE)
+
+	OPEN cur
+	DECLARE @ticketID INT
+	DECLARE @ownerID INT
+	DECLARE @dateFrom DATE
+	DECLARE @days INT
+	DECLARE @isValid BIT
+	DECLARE @firstName VARCHAR(50)
+	DECLARE @lastName VARCHAR(50)
+	DECLARE @id INT
+	FETCH cur INTO @ticketID, @ownerID, @dateFrom, @id, @firstName, @lastName
+	DECLARE @daysDiff INT
+	
+	WHILE (@@FETCH_STATUS = 0)
+	BEGIN
+		IF (@dateFrom <= @currentDay)
+		BEGIN
+			SET @daysDiff = DATEDIFF(day, @dateFrom, @currentDay)
+			IF ((@ticketID BETWEEN 18 AND 21 AND @daysDiff <= 30) OR (@ticketID BETWEEN 22 AND 23 AND @daysDiff <= 60))
+			INSERT INTO @result VALUES(@ownerID, @firstName, @lastName, @dateFrom)
+		END
+		FETCH cur INTO @ticketID, @ownerID, @dateFrom, @id, @firstName, @lastName
+	END
+
+	CLOSE cur
+	DEALLOCATE cur
+
+	SELECT * FROM @result
+END
+GO
+
