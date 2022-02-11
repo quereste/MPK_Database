@@ -4,6 +4,9 @@ DROP PROCEDURE Passenger_Ticket_Info
 IF OBJECT_ID('Passengers_With_Valid_Periodic_Tickets', 'P') IS NOT NULL
 DROP PROCEDURE Passengers_With_Valid_Periodic_Tickets
 
+IF OBJECT_ID('Ticket_Prices', 'P') IS NOT NULL
+DROP PROCEDURE Ticket_Prices
+
 GO
 
 CREATE PROCEDURE Passenger_Ticket_Info (@id INT) AS
@@ -77,6 +80,20 @@ BEGIN
 	DEALLOCATE cur
 
 	SELECT * FROM @result
+END
+GO
+
+GO
+-- view ticket prices on a day passed as an argument
+CREATE PROCEDURE Ticket_Prices(@day DATE) AS
+BEGIN
+	SELECT * INTO #result FROM TypesOfTickets
+
+	IF EXISTS (SELECT * FROM Days_With_Discounts
+	WHERE @day = Days_With_Discounts.AirReadingDate)
+		UPDATE #result SET Price = 0 WHERE Periodic = 0
+	
+	SELECT * FROM #result
 END
 GO
 
