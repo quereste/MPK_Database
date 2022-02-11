@@ -9,7 +9,6 @@ IF OBJECT_ID('Lines', 'U') IS NOT NULL DROP TABLE Lines
 IF OBJECT_ID('BusConnections', 'U') IS NOT NULL DROP TABLE BusConnections
 IF OBJECT_ID('TramConnections', 'U') IS NOT NULL DROP TABLE TramConnections
 IF OBJECT_ID('Stops', 'U') IS NOT NULL DROP TABLE Stops
-IF OBJECT_ID('Streets', 'U') IS NOT NULL DROP TABLE Streets 
 IF OBJECT_ID('Vehicles', 'U') IS NOT NULL DROP TABLE Vehicles
 IF OBJECT_ID('SalaryHistory', 'U') IS NOT NULL DROP TABLE SalaryHistory;
 IF OBJECT_ID('EmployeeHolidays', 'U') IS NOT NULL DROP TABLE EmployeeHolidays;
@@ -285,28 +284,18 @@ CREATE TABLE Vehicles (
 
 )
 
-CREATE TABLE Streets (
-	StreetID INT PRIMARY KEY,
-	StreetName NVARCHAR(60)
-)
 
 CREATE TABLE Stops (
 	StopID INT PRIMARY KEY,
---	StreetID INT NOT NULL,
 	StopName NVARCHAR(60) NOT NULL,
 	IsBusStop BIT NOT NULL,
 	IsFinalBusStop BIT NOT NULL,
 	IsTramStop BIT NOT NULL,
 	IsFinalTramStop BIT NOT NULL
 
---	FOREIGN KEY (StreetID) REFERENCES Streets(StreetID)
---	ON UPDATE CASCADE
---	ON DELETE CASCADE,
-
 )
 
 CREATE TABLE TramConnections (
-	ConnectionID INT PRIMARY KEY,
 	FromStopID INT,
 	ToStopID INT,
 	Duration INT NOT NULL,
@@ -321,7 +310,6 @@ CREATE TABLE TramConnections (
 )
 
 CREATE TABLE BusConnections (
-	ConnectionID INT PRIMARY KEY,
 	FromStopID INT,
 	ToStopID INT,
 	Duration INT
