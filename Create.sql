@@ -363,7 +363,6 @@ CREATE TABLE Courses (
 CREATE TABLE DetailedCourses (
 	DetailedCourseID INT PRIMARY KEY,
 	CourseID INT,
-	CourseDay BIT NOT NULL,
 	CourseDate DATE NOT NULL,
 
 	FOREIGN KEY (CourseID) REFERENCES Courses(CourseID)
