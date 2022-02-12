@@ -1,4 +1,4 @@
-INSERT INTO Vehicles VALUES
+INSERT INTO Repairs VALUES
 (1, 1, 2008, 1120000, NULL, 1),
 (2, 2, 2009, 2080000, NULL, 3),
 (3, 2, 2004, 1800000, 'multiple heating problems reported', 2),
