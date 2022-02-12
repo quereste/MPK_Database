@@ -351,7 +351,7 @@ CREATE TABLE TramLines (
 CREATE TABLE Courses (
 	CourseID INT PRIMARY KEY,
 	LineID INT,
-	RegularSaturdayHoliday BIT NOT NULL,
+	RegularSaturdayHoliday CHAR NOT NULL,
 	Direction BIT NOT NULL,
 	Departure TIME NOT NULL,
 
