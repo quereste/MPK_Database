@@ -236,7 +236,7 @@ CREATE TABLE PeriodicTickets (
 )
 
 CREATE TABLE Discounts (
-	DiscountID INT PRIMARY KEY,
+	DiscountID INT PRIMARY KEY IDENTITY(1, 1),
 	TicketID INT NOT NULL,
 	DateFrom DATE,
 	DateTo DATE,
