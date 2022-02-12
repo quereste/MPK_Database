@@ -13,7 +13,6 @@ GO
 CREATE TRIGGER New_Discounts ON AirReadings
 AFTER INSERT
 AS
-	print 'ja pierdole'
 	DECLARE cur CURSOR FOR SELECT * FROM inserted
 
 	SELECT * FROM inserted
