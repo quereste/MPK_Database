@@ -305,8 +305,8 @@ DECLARE @error BIT = 0
 	
 	IF @error <> 1
 	BEGIN
-		INSERT INTO TicketInspector VALUES
-				(@id, @licence)
+		INSERT INTO TicketInspectors VALUES
+			(@id, @licence)
 	END
 RETURN
 
