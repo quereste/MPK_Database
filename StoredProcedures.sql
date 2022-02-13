@@ -28,6 +28,11 @@ DROP PROCEDURE Add_Office_Worker
 IF OBJECT_ID('Delete_Passengers_With_Invalid_Periodic_Tickets', 'P') IS NOT NULL
 DROP PROCEDURE Delete_Passengers_With_Invalid_Periodic_Tickets
 
+IF OBJECT_ID('Add_Vehicle', 'P') IS NOT NULL
+DROP PROCEDURE Add_Vehicle
+
+
+
 GO
 
 CREATE PROCEDURE Passenger_Ticket_Info (@id INT) AS
@@ -339,6 +344,38 @@ AS
 RETURN
 
 GO
-EXEC Add_Tram_Driver '76011039337', 'Dor', 'Czarnecki', 'M', '1976-09-10', '2017-05-10', '698007238', 'Anczyca 148', 'Krakow', 'ZZZZZZZZZ9929', 1, '2022-12-11'
-SELECT * FROM TramDrivers
-SELECT * FROM Employees
+CREATE PROCEDURE Add_Vehicle
+(
+ @model_id INT = NULL, 
+ @prod_year INT = NULL, 
+ @mileage INT = NULL,
+ @notes NVARCHAR(200) = NULL,
+ @depot_id INT = NULL
+)
+AS
+	IF @model_id IS NULL OR @prod_year IS NULL OR @mileage IS NULL OR @depot_id IS NULL
+		RAISERROR('Invalid input. Check your input', 16, 1)
+		RETURN
+
+	IF @model_id NOT IN (SELECT ModelID FROM VehicleModels)
+		RAISERROR('Given model does not exist', 15, 1)
+		RETURN
+	
+	IF @mileage < 0
+		RAISERROR('Mileage cannot be a negative number', 16, 1)
+		RETURN
+	
+	IF @prod_year > DATEPART(year, GETDATE())
+		RAISERROR('Invalid production year', 16, 1)
+		RETURN
+
+	IF @depot_id NOT IN (SELECT DepotID FROM Depots)
+		RAISERROR('Invalid depot number', 16, 1)
+		RETURN
+
+	DECLARE @id INT = (SELECT COUNT(*) FROM Vehicles)
+	INSERT INTO Vehicles VALUES
+		(@id + 1, @model_id, @prod_year, @mileage, @notes, @depot_id)
+RETURN
+GO
+
