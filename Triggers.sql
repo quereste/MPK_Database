@@ -1,3 +1,6 @@
+IF OBJECT_ID('Insert_Building', 'TR') IS NOT NULL
+DROP TRIGGER Insert_Building
+
 IF OBJECT_ID('New_Discounts', 'TR') IS NOT NULL
 DROP TRIGGER New_Discounts
 
@@ -11,7 +14,7 @@ IF OBJECT_ID('Passenegers_Data_Check_Update', 'TR') IS NOT NULL
 DROP TRIGGER Passenegers_Data_Check_Update
 
 GO
-CREATE TRIGGER InsertBuilding 
+CREATE TRIGGER Insert_Building 
 ON Buildings 
 AFTER INSERT
 AS
