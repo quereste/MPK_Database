@@ -1,5 +1,6 @@
 IF OBJECT_ID('Interval_Air_Readings', 'TF') IS NOT NULL DROP FUNCTION Interval_Air_Readings
 IF OBJECT_ID('Get_Route', 'TF') IS NOT NULL DROP FUNCTION Get_Route
+IF OBJECT_ID('Number_Of_Vehicles', 'TF') IS NOT NULL DROP FUNCTION Number_Of_Vehicles
 
 GO
 CREATE FUNCTION Interval_Air_Readings (@date DATE)
@@ -89,3 +90,33 @@ END
 GO
 SELECT * FROM dbo.Get_Route(52)
 ORDER BY Ord
+
+GO
+CREATE FUNCTION Number_Of_Vehicles()
+RETURNS @table TABLE
+(
+	Buses INT,
+	Trams INT,
+	SpecialVehicles INT
+) 
+AS
+BEGIN
+
+		DECLARE @noOfTrams INT
+		DECLARE @noOfBuses INT
+		DECLARE @noOfSpecialVehicles INT
+
+		SET @noOfTrams = (SELECT COUNT(*) FROM (SELECT V.ModelID FROM VehicleModels V JOIN TramModels T ON V.ModelID = T.ModelID) AS subquery)
+		SET @noOfBuses = (SELECT COUNT(*) FROM (SELECT V.ModelID FROM VehicleModels V JOIN BusModels B ON V.ModelID = B.ModelID) AS subquery1)
+		SET @noOfSpecialVehicles = (SELECT COUNT(*) FROM (SELECT V.ModelID FROM VehicleModels V JOIN SpecialVehicleModels S ON V.ModelID = S.ModelID) AS subquery2)
+		
+
+		INSERT INTO @table 
+			SELECT @noOfBuses, @noOfTrams, @noOfSpecialVehicles
+
+		RETURN
+END
+
+GO
+
+SELECT * FROM Number_Of_Vehicles()
