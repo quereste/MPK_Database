@@ -1,6 +1,7 @@
 IF OBJECT_ID('Interval_Air_Readings', 'TF') IS NOT NULL DROP FUNCTION Interval_Air_Readings
 IF OBJECT_ID('Get_Route', 'TF') IS NOT NULL DROP FUNCTION Get_Route
 IF OBJECT_ID('Number_Of_Vehicles', 'TF') IS NOT NULL DROP FUNCTION Number_Of_Vehicles
+IF OBJECT_ID('Number_Of_Types_Of_Drives', 'TF') IS NOT NULL DROP FUNCTION Number_Of_Types_Of_Drives
 
 GO
 CREATE FUNCTION Interval_Air_Readings (@date DATE)
@@ -120,3 +121,34 @@ END
 GO
 
 SELECT * FROM Number_Of_Vehicles()
+
+GO
+
+CREATE FUNCTION Number_Of_Types_Of_Drives()
+RETURNS @table TABLE
+(
+	Combustion INT,
+	Electric INT,
+	Hybrid INT
+) 
+AS
+BEGIN
+
+		DECLARE @noOfCombustion INT
+		DECLARE @noOfElectric INT
+		DECLARE @noOfHybrid INT
+
+		SET @noOfCombustion = (SELECT COUNT(*) FROM (SELECT * FROM BusModels WHERE Drive = 'Combustion') AS subquery)
+		SET @noOfElectric = (SELECT COUNT(*) FROM (SELECT * FROM BusModels WHERE Drive = 'Electric') AS subquery1)
+		SET @noOfHybrid = (SELECT COUNT(*) FROM (SELECT * FROM BusModels WHERE Drive = 'Hybrid') AS subquery2)
+		
+
+		INSERT INTO @table 
+			SELECT @noOfCombustion, @noOfElectric, @noOfHybrid
+
+		RETURN
+END
+
+GO
+
+SELECT * FROM Number_Of_Types_Of_Drives()
