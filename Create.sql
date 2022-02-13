@@ -299,7 +299,9 @@ CREATE TABLE TramConnections (
 	FromStopID INT,
 	ToStopID INT,
 	Duration INT NOT NULL,
-
+	
+	PRIMARY KEY (FromStopID, ToStopID),
+	
 	FOREIGN KEY (FromStopID) REFERENCES Stops(StopID)
 	ON UPDATE CASCADE
 	ON DELETE CASCADE,
@@ -313,7 +315,9 @@ CREATE TABLE BusConnections (
 	FromStopID INT,
 	ToStopID INT,
 	Duration INT
-
+	
+	PRIMARY KEY (FromStopID, ToStopID),
+	
 	FOREIGN KEY (FromStopID) REFERENCES Stops(StopID)
 	ON UPDATE CASCADE
 	ON DELETE CASCADE,
