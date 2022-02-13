@@ -54,3 +54,17 @@ CREATE VIEW Days_With_Discounts
 AS
 	SELECT AirReadingDate FROM AirReadings WHERE PM10 >= 150 OR PM25 >= 150 OR NO2 >= 150 OR SO2 >= 150 OR O3 >= 150
 GO
+
+CREATE VIEW Vehicles_in_depots
+AS
+	SELECT B.Address, B.BuildingName AS Depot, VM.ModelName, COUNT(VM.ModelName) AS Count
+	FROM Depots AS D JOIN Vehicles AS V
+	ON D.DepotID = V.DepotID
+	JOIN Buildings AS B
+	ON D.BuildingID = B.BuildingID
+	JOIN VehicleModels AS VM 
+	ON VM.ModelID = V.ModelID
+	GROUP BY B.BuildingName, B.Address, VM.ModelName
+	ORDER BY Address, Depot, Count DESC
+	OFFSET 0 ROWS
+GO
