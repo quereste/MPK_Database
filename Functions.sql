@@ -1,4 +1,6 @@
 IF OBJECT_ID('Interval_Air_Readings', 'TF') IS NOT NULL DROP FUNCTION Interval_Air_Readings
+IF OBJECT_ID('Get_Route', 'TF') IS NOT NULL DROP FUNCTION Get_Route
+
 GO
 CREATE FUNCTION Interval_Air_Readings (@date DATE)
 RETURNS @table TABLE (
@@ -38,3 +40,52 @@ GO
 
 SELECT *
 FROM dbo.Interval_Air_Readings('2021-12-29')
+
+GO
+CREATE FUNCTION Get_Route (@line INT)
+RETURNS @route TABLE
+(	
+	Ord INT,
+	[Stop name] NVARCHAR(60)
+)
+AS
+BEGIN	
+	IF NOT EXISTS
+		(
+			SELECT LineID FROM Lines
+			WHERE LineID = @line
+		)
+	BEGIN
+		INSERT INTO @route VALUES
+			(-1, CAST('Invalid line number.' AS INT))
+	END
+	ELSE
+		IF EXISTS 
+			( 
+				SELECT LineID FROM TramLines
+				WHERE LineID = @line
+			)
+		BEGIN
+			INSERT INTO @route
+				SELECT TL.StopNumber, S.StopName
+				FROM Stops AS S JOIN TramLines AS TL
+				ON TL.StopID = S.StopID
+				WHERE TL.LineID = @line
+				ORDER BY TL.StopNumber
+		END
+
+		ELSE
+			BEGIN 
+				INSERT INTO @route
+					SELECT BL.StopNumber, S.StopName
+					FROM Stops AS S JOIN BusLines AS BL
+					ON BL.StopID = S.StopID
+					WHERE BL.LineID = @line
+					ORDER BY BL.StopNumber
+			END
+	RETURN
+END
+
+GO
+SELECT * FROM dbo.Get_Route(52)
+ORDER BY Ord
