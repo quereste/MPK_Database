@@ -88,7 +88,7 @@ BEGIN
 		IF (@dateFrom <= @currentDay)
 		BEGIN
 			SET @daysDiff = DATEDIFF(day, @dateFrom, @currentDay)
-			IF ((@ticketID BETWEEN 18 AND 21 AND @daysDiff <= 30) OR (@ticketID BETWEEN 22 AND 23 AND @daysDiff <= 60))
+			IF ((@ticketID BETWEEN 18 AND 21 AND @daysDiff <= 30) OR (@ticketID BETWEEN 22 AND 23 AND @daysDiff <= 180))
 			INSERT INTO @result VALUES(@ownerID, @firstName, @lastName, @dateFrom)
 		END
 		FETCH cur INTO @ticketID, @ownerID, @dateFrom, @id, @firstName, @lastName
