@@ -41,10 +41,7 @@ CREATE TABLE Departments (
 CREATE TABLE Buildings (
 	BuildingID INT PRIMARY KEY,
 	BuildingName VARCHAR(50) NOT NULL,
-	Address VARCHAR(50) NOT NULL,
-	DepartmentID INT NOT NULL,
-
-	FOREIGN KEY (DepartmentID) REFERENCES Departments (DepartmentID)
+	Address VARCHAR(50) NOT NULL
 )
 
 CREATE TABLE DepartmentBuildings (
