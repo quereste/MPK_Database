@@ -246,7 +246,6 @@ AS
 	DEALLOCATE cur
 
 GO
-
 CREATE TRIGGER Insert_TramConnections
 ON TramConnections 
 INSTEAD OF INSERT
@@ -257,6 +256,7 @@ BEGIN
 	DECLARE @To INT
 	DECLARE @Time INT
 	
+	print 'xd'
 	DECLARE Records CURSOR
 		FOR SELECT FromStopID, ToStopID, Duration FROM Inserted
 		FOR READ ONLY
@@ -267,10 +267,15 @@ BEGIN
 
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
-		IF (@Time > 0)
-			INSERT INTO TramConnections VALUES (@From, @To, @Time)
+		IF (@To IN (SELECT StopID FROM Stops))
+		BEGIN 
+			IF (@Time > 0)
+				INSERT INTO TramConnections VALUES (@From, @To, @Time)
+			ELSE
+				print CAST(@From AS VARCHAR) + ', ' + CAST(@To AS VARCHAR) + ', ' + CAST(@Time AS VARCHAR) + ' will not be added due to non-positive journey duration between the stops' 
+		END
 		ELSE
-			print CAST(@From AS VARCHAR) + ', ' + CAST(@To AS VARCHAR) + ', ' + CAST(@Time AS VARCHAR) + ' will not be added due to non-positive journey duration between the stops' 
+			print CAST(@From AS VARCHAR) + ', ' + CAST(@To AS VARCHAR) + ', ' + CAST(@Time AS VARCHAR) + ' will not be added due to non-existing stop'
 		FETCH Records INTO @From, @To, @Time
 	END
 	
@@ -291,6 +296,7 @@ BEGIN
 	DECLARE @To INT
 	DECLARE @Time INT
 	
+	print 'xd'
 	DECLARE Records CURSOR
 		FOR SELECT FromStopID, ToStopID, Duration FROM Inserted
 		FOR READ ONLY
@@ -301,10 +307,15 @@ BEGIN
 
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
-		IF (@Time > 0)
-			INSERT INTO TramConnections VALUES (@From, @To, @Time)
+		IF (@To IN (SELECT StopID FROM Stops))
+		BEGIN 
+			IF (@Time > 0)
+				INSERT INTO TramConnections VALUES (@From, @To, @Time)
+			ELSE
+				print CAST(@From AS VARCHAR) + ', ' + CAST(@To AS VARCHAR) + ', ' + CAST(@Time AS VARCHAR) + ' will not be added due to non-positive journey duration between the stops' 
+		END
 		ELSE
-			print CAST(@From AS VARCHAR) + ', ' + CAST(@To AS VARCHAR) + ', ' + CAST(@Time AS VARCHAR) + ' will not be added due to non-positive journey duration between the stops' 
+			print CAST(@From AS VARCHAR) + ', ' + CAST(@To AS VARCHAR) + ', ' + CAST(@Time AS VARCHAR) + ' will not be added due to non-existing stop'
 		FETCH Records INTO @From, @To, @Time
 	END
 	
