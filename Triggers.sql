@@ -1,6 +1,3 @@
-IF OBJECT_ID('Insert_Building', 'TR') IS NOT NULL
-DROP TRIGGER Insert_Building
-
 IF OBJECT_ID('New_Discounts', 'TR') IS NOT NULL
 DROP TRIGGER New_Discounts
 
@@ -19,13 +16,6 @@ DROP TRIGGER Insert_TramConnections
 IF OBJECT_ID('Insert_BusConnections', 'TR') IS NOT NULL
 DROP TRIGGER Insert_BusConnections
 
-GO
-CREATE TRIGGER Insert_Building 
-ON Buildings 
-AFTER INSERT
-AS
-	INSERT INTO DepartmentBuildings
-		SELECT BuildingID, DepartmentID FROM INSERTED
 GO
 
 CREATE TRIGGER New_Discounts ON AirReadings
