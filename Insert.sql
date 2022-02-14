@@ -8,14 +8,14 @@ INSERT INTO Departments VALUES
 
 
 INSERT INTO Buildings VALUES 
-	(1, 'Office', 'Kapelanka', 3),
-	(2, 'Office', 'Grunwaldzka', 3),
-	(3, 'Office', 'Norwida', 3),
-	(4, 'Office', 'Mickiewicza', 3),
-	(5, 'Tram depot', 'Borkowska', 2),
-	(6, 'Tram depot', 'Czerwone Maki', 2),
-	(7, 'Bus depot', 'Radosna', 3),
-	(8, 'Bus depot', 'Sienkiewicza', 3)
+	(1, 'Office', 'Kapelanka'),
+	(2, 'Office', 'Grunwaldzka'),
+	(3, 'Office', 'Norwida'),
+	(4, 'Office', 'Mickiewicza'),
+	(5, 'Tram depot', 'Borkowska'),
+	(6, 'Tram depot', 'Czerwone Maki'),
+	(7, 'Bus depot', 'Radosna'),
+	(8, 'Bus depot', 'Sienkiewicza')
 
 INSERT INTO DepartmentBuildings VALUES
 	(1, 1),
