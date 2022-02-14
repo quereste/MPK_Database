@@ -451,3 +451,6 @@ ADD CONSTRAINT is_passenger_pesel_valid CHECK(ISNUMERIC(PESEL) = 1 AND LEN(PESEL
 ALTER TABLE Discounts
 ADD CONSTRAINT is_discount_date_valid CHECK(DateFrom >= DateTo)
 
+ALTER TABLE Courses
+ADD CONSTRAINT is_course_type_valid CHECK(RegularSaturdayHoliday IN ('R', 'S', 'H'))
+
