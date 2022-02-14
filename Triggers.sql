@@ -256,7 +256,6 @@ BEGIN
 	DECLARE @To INT
 	DECLARE @Time INT
 	
-	print 'xd'
 	DECLARE Records CURSOR
 		FOR SELECT FromStopID, ToStopID, Duration FROM Inserted
 		FOR READ ONLY
@@ -295,8 +294,7 @@ BEGIN
 	DECLARE @From INT
 	DECLARE @To INT
 	DECLARE @Time INT
-	
-	print 'xd'
+
 	DECLARE Records CURSOR
 		FOR SELECT FromStopID, ToStopID, Duration FROM Inserted
 		FOR READ ONLY
