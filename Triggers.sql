@@ -13,6 +13,12 @@ DROP TRIGGER Passenegers_Data_Check_Insert
 IF OBJECT_ID('Passenegers_Data_Check_Update', 'TR') IS NOT NULL
 DROP TRIGGER Passenegers_Data_Check_Update
 
+IF OBJECT_ID('Insert_TramConnections', 'TR') IS NOT NULL
+DROP TRIGGER Insert_TramConnections
+
+IF OBJECT_ID('Insert_BusConnections', 'TR') IS NOT NULL
+DROP TRIGGER Insert_BusConnections
+
 GO
 CREATE TRIGGER Insert_Building 
 ON Buildings 
@@ -238,5 +244,73 @@ AS
 
 	CLOSE cur
 	DEALLOCATE cur
+
+GO
+
+CREATE TRIGGER Insert_TramConnections
+ON TramConnections 
+INSTEAD OF INSERT
+AS 
+BEGIN
+	
+	DECLARE @From INT
+	DECLARE @To INT
+	DECLARE @Time INT
+	
+	DECLARE Records CURSOR
+		FOR SELECT FromStopID, ToStopID, Duration FROM Inserted
+		FOR READ ONLY
+	
+	OPEN Records
+
+	FETCH Records INTO @From, @To, @Time
+
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+		IF (@Time > 0)
+			INSERT INTO TramConnections VALUES (@From, @To, @Time)
+		ELSE
+			print CAST(@From AS VARCHAR) + ', ' + CAST(@To AS VARCHAR) + ', ' + CAST(@Time AS VARCHAR) + ' will not be added due to non-positive journey duration between the stops' 
+		FETCH Records INTO @From, @To, @Time
+	END
+	
+	CLOSE Records
+	DEALLOCATE Records
+
+END
+
+GO
+
+CREATE TRIGGER Insert_BusConnections
+ON BusConnections 
+INSTEAD OF INSERT
+AS 
+BEGIN
+	
+	DECLARE @From INT
+	DECLARE @To INT
+	DECLARE @Time INT
+	
+	DECLARE Records CURSOR
+		FOR SELECT FromStopID, ToStopID, Duration FROM Inserted
+		FOR READ ONLY
+	
+	OPEN Records
+
+	FETCH Records INTO @From, @To, @Time
+
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+		IF (@Time > 0)
+			INSERT INTO TramConnections VALUES (@From, @To, @Time)
+		ELSE
+			print CAST(@From AS VARCHAR) + ', ' + CAST(@To AS VARCHAR) + ', ' + CAST(@Time AS VARCHAR) + ' will not be added due to non-positive journey duration between the stops' 
+		FETCH Records INTO @From, @To, @Time
+	END
+	
+	CLOSE Records
+	DEALLOCATE Records
+
+END
 
 GO
