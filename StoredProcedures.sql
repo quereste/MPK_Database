@@ -31,7 +31,12 @@ DROP PROCEDURE Delete_Passengers_With_Invalid_Periodic_Tickets
 IF OBJECT_ID('Add_Vehicle', 'P') IS NOT NULL
 DROP PROCEDURE Add_Vehicle
 
+IF OBJECT_ID('AddStopToBusLineBeforeAnother', 'P') IS NOT NULL
+DROP PROCEDURE AddStopToBusLineBeforeAnother
 
+
+IF OBJECT_ID('AddStopToTramLineBeforeAnother', 'P') IS NOT NULL
+DROP PROCEDURE AddStopToTramLineBeforeAnother
 
 GO
 
@@ -379,3 +384,42 @@ AS
 RETURN
 GO
 
+CREATE PROCEDURE AddStopToBusLineBeforeAnother (@line INT, @id INT, @idbefore INT) AS
+BEGIN
+	IF @idbefore = 0
+	BEGIN
+		DECLARE @limit INT
+		SET @limit = (SELECT Count(*) FROM BusLines WHERE LineID = @line)
+		INSERT INTO BusLines VALUES (@line, @limit + 1, @id)
+	END
+	ELSE
+	BEGIN
+		DECLARE @before INT
+		SET @before = (SELECT StopNumber FROM BusLines WHERE LineID = @line AND StopID = @idbefore)
+
+		UPDATE BusLines SET StopNumber = StopNumber + 1 WHERE LineID = @line AND StopNumber >= @before
+
+		INSERT INTO BusLines VALUES (@line, @before, @id)
+	END
+END
+GO
+
+CREATE PROCEDURE AddStopToTramLineBeforeAnother (@line INT, @id INT, @idbefore INT) AS
+BEGIN
+	IF @idbefore = 0
+	BEGIN
+		DECLARE @limit INT
+		SET @limit = (SELECT Count(*) FROM TramLines WHERE LineID = @line)
+		INSERT INTO TramLines VALUES (@line, @limit + 1, @id)
+	END
+	ELSE
+	BEGIN
+		DECLARE @before INT
+		SET @before = (SELECT StopNumber FROM TramLines WHERE LineID = @line AND StopID = @idbefore)
+
+		UPDATE TramLines SET StopNumber = StopNumber + 1 WHERE LineID = @line AND StopNumber >= @before
+
+		INSERT INTO TramLines VALUES (@line, @before, @id)
+	END
+END
+GO
