@@ -321,6 +321,8 @@ CREATE TABLE BusConnections (
 
 CREATE TABLE Lines (
 	LineID INT PRIMARY KEY,
+	Accelerated BIT NOT NULL,
+	NightLine BIT NOT NULL
 )
 
 CREATE TABLE BusLines (
