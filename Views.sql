@@ -68,3 +68,22 @@ AS
 	ORDER BY Address, Depot, Count DESC
 	OFFSET 0 ROWS
 GO
+
+--Typical queries
+SELECT C.Departure, C.LineID
+FROM Employees AS E JOIN DetailedBusCourses AS D
+ON E.EmployeeID = D.DriverID
+JOIN Courses AS C
+ON D.DetailedCourseID = C.CourseID
+WHERE E.FirstName = N'Alfred' AND E.LastName = N'Szewczyk'
+
+
+SELECT H.DateFrom, H.DateTo, H.Salary
+FROM Employees as E JOIN SalaryHistory AS H
+ON E.EmployeeID = H.EmployeeID
+WHERE E.FirstName = N'Ariel' AND E.LastName = N'Pawlak'
+
+SELECT H.DateFrom, H.DateTo
+FROM Employees as E JOIN EmployeeHolidays AS H
+ON E.EmployeeID = H.EmployeeID
+WHERE E.FirstName = N'Mariusz' AND E.LastName = N'Kucharski'
