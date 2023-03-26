@@ -16,6 +16,9 @@ DROP TRIGGER Insert_TramConnections
 IF OBJECT_ID('Insert_BusConnections', 'TR') IS NOT NULL
 DROP TRIGGER Insert_BusConnections
 
+IF OBJECT_ID('Delete_Employee', 'TR') IS NOT NULL
+DROP TRIGGER Delete_Employee
+
 GO
 
 CREATE TRIGGER New_Discounts ON AirReadings
@@ -310,6 +313,20 @@ BEGIN
 	CLOSE Records
 	DEALLOCATE Records
 
+END
+
+GO
+
+CREATE TRIGGER Delete_Employee 
+ON Employees
+INSTEAD OF DELETE AS
+BEGIN
+	DELETE FROM BusDrivers WHERE EmployeeID in (SELECT EmployeeID FROM deleted);
+	DELETE FROM TramDrivers WHERE EmployeeID in (SELECT EmployeeID FROM deleted);
+	DELETE FROM TicketInspectors WHERE EmployeeID in (SELECT EmployeeID FROM deleted);
+	DELETE FROM OfficeWorkers WHERE EmployeeID in (SELECT EmployeeID FROM deleted);
+	DELETE FROM ServiceTechnicians WHERE EmployeeID in (SELECT EmployeeID FROM deleted);
+	DELETE FROM Employees WHERE EmployeeID in (SELECT EmployeeID FROM deleted);
 END
 
 GO
