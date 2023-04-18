@@ -1,3 +1,4 @@
+IF OBJECT_ID('Users', 'U') IS NOT NULL DROP TABLE Users
 IF OBJECT_ID('Repairs', 'U') IS NOT NULL DROP TABLE Repairs
 IF OBJECT_ID('DetailedTramCourses', 'U') IS NOT NULL DROP TABLE DetailedTramCourses
 IF OBJECT_ID('DetailedBusCourses', 'U') IS NOT NULL DROP TABLE DetailedBusCourses
@@ -32,6 +33,13 @@ IF OBJECT_ID('Discounts', 'U') IS NOT NULL DROP TABLE Discounts
 IF OBJECT_ID('AirReadings', 'U') IS NOT NULL DROP TABLE AirReadings
 IF OBJECT_ID('SoldSingleTickets ', 'U') IS NOT NULL DROP TABLE SoldSingleTickets
 IF OBJECT_ID('TypesOfTickets', 'U') IS NOT NULL DROP TABLE TypesOfTickets
+
+CREATE TABLE Users {
+	id INT IDENTITY(1, 1) PRIMARY KEY NOT NULL,
+	Username VARCHAR(50) NOT NULL,
+	Email VARCHAR(50) NOT NULL,
+	Password VARCHAR(80) NOT NULL
+}
 
 CREATE TABLE Departments (
 	DepartmentID INT PRIMARY KEY,
